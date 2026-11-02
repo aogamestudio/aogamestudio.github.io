@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AO Game Studio</title>
+  <meta name="description" content="AO Game Studio – independent studio crafting mobile action RPGs for players who love the grind.">
+  <meta property="og:title" content="AO Game Studio">
+  <meta property="og:description" content="Independent studio crafting mobile action RPGs.">
+  <meta name="theme-color" content="#0d1118">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================
+       RENKLER — Sanat stili netleşince sadece burayı değiştir.
+       ========================================================== */
+    :root {
+      --bg:        #0d1118;
+      --bg-alt:    #131a24;
+      --card:      #18212e;
+      --line:      #263244;
+      --text:      #e8ecf2;
+      --muted:     #94a1b4;
+      --accent:    #ff6a2b;   /* ateş */
+      --accent-2:  #3fb6e8;   /* buz  */
+      --accent-3:  #9a7b55;   /* taş  */
+      --radius:    14px;
+      --max:       1080px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+
+    /* ---------- Üst menü ---------- */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(13, 17, 24, .85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo {
+      font-family: "Cinzel", serif; font-weight: 800; letter-spacing: .08em;
+      text-decoration: none; font-size: 1.15rem;
+    }
+    .logo span { color: var(--accent); }
+    .nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+    .nav ul a { text-decoration: none; color: var(--muted); font-size: .95rem; font-weight: 500; }
+    .nav ul a:hover { color: var(--text); }
+    @media (max-width: 560px) { .nav ul { gap: 14px; } .nav ul li.hide-sm { display: none; } }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; overflow: hidden;
+      min-height: 86vh; display: grid; place-items: center; text-align: center;
+      padding: 80px 0;
+      background:
+        radial-gradient(60% 50% at 50% 110%, rgba(255,106,43,.28), transparent 70%),
+        radial-gradient(40% 40% at 15% 20%, rgba(63,182,232,.12), transparent 70%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    }
+    .eyebrow {
+      display: inline-block; font-size: .78rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid rgba(255,106,43,.4); border-radius: 999px;
+      padding: 6px 14px; margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-family: "Cinzel", serif; font-weight: 800;
+      font-size: clamp(2.4rem, 8vw, 5rem); line-height: 1.05; margin: 0 0 18px;
+      letter-spacing: .03em;
+    }
+    .hero p { color: var(--muted); font-size: clamp(1rem, 2.6vw, 1.2rem); max-width: 560px; margin: 0 auto 34px; }
+    .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; text-decoration: none; font-weight: 600;
+      padding: 13px 26px; border-radius: 10px; transition: transform .15s, background .15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: #1a0d05; }
+    .btn-ghost { border: 1px solid var(--line); color: var(--text); }
+    .btn-ghost:hover { background: var(--card); }
+
+    /* Yükselen kıvılcımlar (sadece CSS, çok hafif) */
+    .embers { position: absolute; inset: 0; pointer-events: none; }
+    .embers i {
+      position: absolute; bottom: -10px; width: 4px; height: 4px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 8px var(--accent);
+      opacity: 0; animation: rise linear infinite;
+    }
+    @keyframes rise {
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
+      15%  { opacity: .9; }
+      100% { transform: translateY(-90vh) translateX(30px); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { .embers { display: none; } html { scroll-behavior: auto; } }
+
+    /* ---------- Bölümler ---------- */
+    section { padding: 88px 0; }
+    .section-title {
+      font-family: "Cinzel", serif; font-size: clamp(1.6rem, 4.5vw, 2.3rem);
+      margin: 0 0 12px; text-align: center;
+    }
+    .section-sub { text-align: center; color: var(--muted); max-width: 600px; margin: 0 auto 48px; }
+
+    /* Öne çıkan oyun */
+    .game {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+    }
+    .game-art {
+      min-height: 320px; position: relative;
+      background:
+        radial-gradient(circle at 30% 60%, rgba(255,106,43,.55), transparent 35%),
+        radial-gradient(circle at 70% 40%, rgba(63,182,232,.45), transparent 35%),
+        radial-gradient(circle at 50% 85%, rgba(154,123,85,.5), transparent 40%),
+        #0f151e;
+      display: grid; place-items: center;
+    }
+    .game-art span {
+      font-family: "Cinzel", serif; font-size: 1.1rem; letter-spacing: .3em;
+      color: rgba(255,255,255,.75); text-transform: uppercase;
+    }
+    .game-body { padding: 36px; }
+    .tag {
+      display: inline-block; font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      background: rgba(255,106,43,.15); color: var(--accent); padding: 4px 10px; border-radius: 6px;
+    }
+    .game-body h3 { font-family: "Cinzel", serif; font-size: 1.8rem; margin: 14px 0 10px; }
+    .game-body p { color: var(--muted); margin: 0 0 20px; }
+    .features { list-style: none; padding: 0; margin: 0 0 26px; display: grid; gap: 10px; }
+    .features li { display: flex; gap: 10px; align-items: flex-start; }
+    .features li::before {
+      content: ""; flex: none; width: 8px; height: 8px; margin-top: 9px; border-radius: 2px;
+      background: var(--accent); transform: rotate(45deg);
+    }
+    .features li:nth-child(2)::before { background: var(--accent-2); }
+    .features li:nth-child(3)::before { background: var(--accent-3); }
+    .stores { display: flex; gap: 10px; flex-wrap: wrap; }
+    .store {
+      display: inline-flex; flex-direction: column; padding: 8px 16px; border-radius: 10px;
+      border: 1px solid var(--line); background: var(--bg); text-decoration: none; min-width: 150px;
+    }
+    .store small { color: var(--muted); font-size: .72rem; }
+    .store strong { font-size: .98rem; }
+    @media (max-width: 760px) {
+      .game { grid-template-columns: 1fr; }
+      .game-art { min-height: 220px; }
+      .game-body { padding: 26px 20px; }
+    }
+
+    /* Hakkımızda */
+    .about { background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .pillar { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+    .pillar h4 { margin: 0 0 8px; font-size: 1.05rem; }
+    .pillar p { margin: 0; color: var(--muted); font-size: .95rem; }
+    .pillar .dot { width: 34px; height: 4px; border-radius: 4px; margin-bottom: 16px; background: var(--accent); }
+    .pillar:nth-child(2) .dot { background: var(--accent-2); }
+    .pillar:nth-child(3) .dot { background: var(--accent-3); }
+    @media (max-width: 760px) { .pillars { grid-template-columns: 1fr; } }
+
+    /* İletişim */
+    .contact { text-align: center; }
+    .contact a.mail {
+      display: inline-block; font-size: clamp(1.05rem, 3.5vw, 1.4rem); font-weight: 600;
+      color: var(--accent); text-decoration: none; margin-bottom: 26px; word-break: break-all;
+    }
+    .socials { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .socials a {
+      text-decoration: none; padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px;
+      color: var(--muted); font-size: .92rem;
+    }
+    .socials a:hover { color: var(--text); background: var(--card); }
+
+    /* Altbilgi */
+    footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--muted); font-size: .88rem; }
+    .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .foot nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    .foot a { text-decoration: none; }
+    .foot a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="#top">AO<span>.</span>GAMES</a>
+      <ul>
+        <li><a href="#game">Game</a></li>
+        <li class="hide-sm"><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="embers" aria-hidden="true">
+        <i style="left:8%;  animation-duration:9s;  animation-delay:0s"></i>
+        <i style="left:18%; animation-duration:12s; animation-delay:3s"></i>
+        <i style="left:31%; animation-duration:10s; animation-delay:1s"></i>
+        <i style="left:44%; animation-duration:14s; animation-delay:5s"></i>
+        <i style="left:57%; animation-duration:11s; animation-delay:2s"></i>
+        <i style="left:69%; animation-duration:13s; animation-delay:6s"></i>
+        <i style="left:80%; animation-duration:9s;  animation-delay:4s"></i>
+        <i style="left:91%; animation-duration:12s; animation-delay:1.5s"></i>
+      </div>
+
+      <div class="wrap">
+        <span class="eyebrow">Independent Game Studio</span>
+        <h1>AO Game Studio</h1>
+        <p>We craft mobile action RPGs for players who love the grind — deep loot, satisfying combat and a world worth coming back to every day.</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="#game">Our Game</a>
+          <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÖNE ÇIKAN OYUN -->
+    <section id="game">
+      <div class="wrap">
+        <h2 class="section-title">Now in Development</h2>
+        <p class="section-sub">Our first title is taking shape. Here's a glimpse of what's coming.</p>
+
+        <article class="game">
+          <!-- Görsel hazır olunca bu div'in yerine: <img src="images/key-art.jpg" alt="..."> -->
+          <div class="game-art" aria-hidden="true"><span>Project Codename</span></div>
+
+          <div class="game-body">
+            <span class="tag">Coming Soon · Android &amp; iOS</span>
+            <h3>Project Codename</h3>
+            <p>A 3D action RPG built around the joy of progression. Roam, fight, loot and grow stronger — with fresh daily and weekly challenges waiting every time you return.</p>
+            <ul class="features">
+              <li>Elemental magic — fire, ice and stone, each with its own feel</li>
+              <li>Loot-driven progression that rewards every session</li>
+              <li>Daily &amp; weekly quests built to respect your time</li>
+            </ul>
+            <div class="stores">
+              <!-- Mağaza bağlantıları hazır olunca href'leri değiştir -->
+              <a class="store" href="#" aria-disabled="true"><small>Coming soon on</small><strong>Google Play</strong></a>
+              <a class="store" href="#" aria-disabled="true"><small>Coming soon on</small><strong>App Store</strong></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- HAKKIMIZDA -->
+    <section id="about" class="about">
+      <div class="wrap">
+        <h2 class="section-title">About the Studio</h2>
+        <p class="section-sub">AO Game Studio is a small independent team focused on building games we'd want to play ourselves.</p>
+
+        <div class="pillars">
+          <div class="pillar">
+            <div class="dot"></div>
+            <h4>Built for Mobile</h4>
+            <p>Smooth performance on everyday devices, controls designed for touch from day one.</p>
+          </div>
+          <div class="pillar">
+            <div class="dot"></div>
+            <h4>Fair Progression</h4>
+            <p>Your time matters. Progress comes from playing, not from paying to win.</p>
+          </div>
+          <div class="pillar">
+            <div class="dot"></div>
+            <h4>Long-Term Support</h4>
+            <p>Regular updates, new content and a game that keeps growing with its players.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- İLETİŞİM -->
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-sub">Questions, feedback or press inquiries — we'd love to hear from you.</p>
+        <!-- Kendi e-posta adresinle değiştir -->
+        <a class="mail" href="mailto:contact@example.com">contact@example.com</a>
+        <div class="socials">
+          <!-- Kullanmadığın hesapları sil, kullandıklarının href'ini doldur -->
+          <a href="#">Discord</a>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <span>© <span id="year">2026</span> AO Game Studio</span>
+      <nav>
+        <!-- Bu sayfaları ileride ekleyince bağlantıları güncelle -->
+        <a href="#">Privacy Policy</a>
+        <a href="#">Account Deletion</a>
+        <a href="#contact">Support</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
